@@ -4,6 +4,24 @@ from core import models as core_models
 from users import models as user_models
 
 
+class AbstractItem(core_models.TimeStampedModel):
+
+    """ Abstract Item """
+
+    name = models.CharField(max_length=80)
+
+    class Meta:
+        abstract: True
+
+    def __str__(self):
+        return self.name
+
+
+class RoomType(AbstractItem):
+    
+    pass
+
+
 # Create your models here.
 class Room(core_models.TimeStampedModel):
 
@@ -28,3 +46,7 @@ class Room(core_models.TimeStampedModel):
     # user는 foreign key가 필요없기 때문에 따로 필드를 가지고 있지 않다.
     # 해당 내용은 #4.2 참조
     host = models.ForeignKey(user_models.User, on_delete=models.CASCADE)
+    room_type = models.ManyToManyField(RoomType, blank=True)
+
+    def __str__(self):
+        return self.name
