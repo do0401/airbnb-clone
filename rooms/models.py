@@ -20,6 +20,7 @@ class AbstractItem(core_models.TimeStampedModel):
 class RoomType(AbstractItem):
 
     """ RoomType Model Definition """
+
     class Meta:
         verbose_name = "Room Type"
 
@@ -27,13 +28,15 @@ class RoomType(AbstractItem):
 class Amenity(AbstractItem):
 
     """ Amenity Model Definition """
+
     class Meta:
         verbose_name_plural = "Amenities"
 
 
 class Facility(AbstractItem):
 
-    """ Factility Model Definition """
+    """ Facility Model Definition """
+
     class Meta:
         verbose_name_plural = "Facilities"
 
@@ -41,6 +44,7 @@ class Facility(AbstractItem):
 class HouseRule(AbstractItem):
 
     """ HouseRule Model Definition """
+
     class Meta:
         verbose_name = "House Rule"
 
@@ -80,7 +84,7 @@ class Room(core_models.TimeStampedModel):
     check_in = models.TimeField()
     check_out = models.TimeField()
     instant_book = models.BooleanField(default=False)
-    # foreign key는 한 모델을 다른 모델과 연결시켜주는 역할을 한다. 
+    # foreign key는 한 모델을 다른 모델과 연결시켜주는 역할을 한다.
     # foreign key는 일대다 관계이다.
     # 100개의 룸을 만들면 그 룸은 한 user를 가리킬 것이다.
     # user는 foreign key가 필요없기 때문에 따로 필드를 가지고 있지 않다.
@@ -89,7 +93,8 @@ class Room(core_models.TimeStampedModel):
     host = models.ForeignKey("users.User", on_delete=models.CASCADE)
     room_type = models.ForeignKey("RoomType", on_delete=models.SET_NULL, null=True)
     amenities = models.ManyToManyField("Amenity", blank=True)
-    factilites = models.ManyToManyField("Facility", blank=True)
+    # factilites = models.ManyToManyField("Facility", blank=True)
+    facilities = models.ManyToManyField("Facility", blank=True)
     house_rules = models.ManyToManyField("HouseRule", blank=True)
 
     def __str__(self):
